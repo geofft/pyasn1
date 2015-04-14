@@ -99,6 +99,13 @@ class BitStringDecoderTestCase(unittest.TestCase):
             ints2octs((35, 128, 3, 2, 0, 169, 3, 2, 1, 138, 0, 0)),
             substrateFun=lambda a,b,c: (b,c)
             ) == (ints2octs((3, 2, 0, 169, 3, 2, 1, 138, 0, 0)), -1)
+    def testTypeChecking(self):
+        try:
+            decoder.decode(ints2octs((35, 4, 2, 2, 42, 42)))
+        except PyAsn1Error:
+            pass
+        else:
+            assert 0, 'accepted mis-encoded bit string constructed out of an integer'
         
 class OctetStringDecoderTestCase(unittest.TestCase):
     def testDefMode(self):
